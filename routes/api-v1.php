@@ -14,17 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::group([
-//     'middleware' => ['auth:api']
-// ], function () {
-//     //lists all users
-//     // Route::post('/all-user', 'ApiController@allUsers')->name('all-user');
-// });
+Route::group([
+    'middleware' => ['auth:api']
+], function () {
+  
+    Route::apiresource('category', 'CategoryController');
+
+});
 
 //auth routes
 Route::post('v1/user-register', 'AuthController@register');
 Route::get('users', 'AuthController@users');
 Route::post('user-login', 'AuthController@login');
+
 
 //lists all active tests
 // Route::post('v1/test', 'API\ V1\ApiController@getActiveTest');

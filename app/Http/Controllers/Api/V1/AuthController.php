@@ -11,13 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    
- /**
+
+    public function login(Request $request)
+    {
+        
+    /**
      * @OA\Post(
-     ** path="/v1/Register1",
-     *   tags={"Register"},
-     *   summary="Register",
-     *   operationId="Register",
+     ** path="/v1/user-login",
+     *   tags={"Login"},
+     *   summary="Login",
+     *   operationId="login",
      *
      *   @OA\Parameter(
      *      name="email",
@@ -65,14 +68,8 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function __construct()
-     {
-         dd('eeee');
-     }
-
-    public function login(Request $request)
-    {
     
+     
         $validator = $request->validate([
             'email' => 'email|required',
             'password' => 'required'
