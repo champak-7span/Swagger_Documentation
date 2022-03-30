@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\User;
+use App\Models\User;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,12 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthController extends Controller
 {
     
-    /**
+ /**
      * @OA\Post(
-     ** path="/v1/user-login",
-     *   tags={"Login"},
-     *   summary="Login",
-     *   operationId="login",
+     ** path="/v1/Register1",
+     *   tags={"Register"},
+     *   summary="Register",
+     *   operationId="Register",
      *
      *   @OA\Parameter(
      *      name="email",
@@ -65,10 +65,14 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function __construct()
+     {
+         dd('eeee');
+     }
 
     public function login(Request $request)
     {
-
+    
         $validator = $request->validate([
             'email' => 'email|required',
             'password' => 'required'
@@ -83,84 +87,6 @@ class AuthController extends Controller
             return response()->json(['success' => $success])->setStatusCode(Response::HTTP_ACCEPTED);
         }
     }
-
-    //     /**
-    //  * @OA\Post(
-    //  ** path="/v1/user-register",
-    //  *   tags={"Register"},
-    //  *   summary="Register",
-    //  *   operationId="register",
-    //  *
-    //  *  @OA\Parameter(
-    //  *      name="name",
-    //  *      in="query",
-    //  *      required=true,
-    //  *      @OA\Schema(
-    //  *           type="string"
-    //  *      )
-    //  *   ),
-    //  *  @OA\Parameter(
-    //  *      name="email",
-    //  *      in="query",
-    //  *      required=true,
-    //  *      @OA\Schema(
-    //  *           type="string"
-    //  *      )
-    //  *   ),
-    //  *   @OA\Parameter(
-    //  *       name="mobile_number",
-    //  *      in="query",
-    //  *      required=true,
-    //  *      @OA\Schema(
-    //  *           type="integer"
-    //  *      )
-    //  *   ),
-    //  *   @OA\Parameter(
-    //  *      name="password",
-    //  *      in="query",
-    //  *      required=true,
-    //  *      @OA\Schema(
-    //  *           type="string"
-    //  *      )
-    //  *   ),
-    //  *      @OA\Parameter(
-    //  *      name="password_confirmation",
-    //  *      in="query",
-    //  *      required=true,
-    //  *      @OA\Schema(
-    //  *           type="string"
-    //  *      )
-    //  *   ),
-    //  *   @OA\Response(
-    //  *      response=201,
-    //  *       description="Success",
-    //  *      @OA\MediaType(
-    //  *           mediaType="application/json",
-    //  *      )
-    //  *   ),
-    //  *   @OA\Response(
-    //  *      response=401,
-    //  *       description="Unauthenticated"
-    //  *   ),
-    //  *   @OA\Response(
-    //  *      response=400,
-    //  *      description="Bad Request"
-    //  *   ),
-    //  *   @OA\Response(
-    //  *      response=404,
-    //  *      description="not found"
-    //  *   ),
-    //  *      @OA\Response(
-    //  *          response=403,
-    //  *          description="Forbidden"
-    //  *      )
-    //  *)
-    //  **/
-    // /**
-    //  * Register api
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
 
     public function register(Request $request)
     {
@@ -181,5 +107,13 @@ class AuthController extends Controller
         $success['token'] =  $user->createToken('authToken')->accessToken;
         $success['name'] =  $user->name;
         return response()->json(['success' => $success])->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function users()
+    {
+        $users = User::all();
+        if($users){
+            return response()->json(['success' => $users])->setStatusCode(Response::HTTP_CREATED);
+        }
     }
 }

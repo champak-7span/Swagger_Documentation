@@ -22,6 +22,9 @@ class RegisterController extends Controller
     |
     */
 
+
+    
+    
     use RegistersUsers;
 
     /**

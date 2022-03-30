@@ -19,39 +19,19 @@ class Controller extends BaseController
  *      version="1.0.0",
  *      description="API documentation for Returns Service App",
  *      @OA\Contact(
- *          email="sushil@stepfront.com"
+ *          email="admin@stepfront.com"
  *      )
  *  ),
  *  @OA\Server(
  *      description="Returns App API",
- *      url="https://localhost/api/"
+ *      url="http://127.0.0.1:8000/api/"
  *  ),
  *  @OA\PathItem(
  *      path="/"
  *  )
  * )
  */
-    /**
-     * @OA\Info(
-     *      version="1.0.0",
-     *      title="Integration Swagger in Laravel with Passport Auth Documentation",
-     *      description="Implementation of Swagger with in Laravel",
-     *      @OA\Contact(
-     *          email="admin@admin.com"
-     *      ),
-     *      @OA\License(
-     *          name="Apache 2.0",
-     *          url="http://www.apache.org/licenses/LICENSE-2.0.html"
-     *      )
-     * )
-     *
-     * @OA\Server(
-     *      url=L5_SWAGGER_CONST_HOST,
-     *      description="Demo API Server"
-     * )
 
-     *
-     *
-     */
+
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }

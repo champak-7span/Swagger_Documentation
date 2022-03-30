@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 //auth routes
 Route::post('v1/user-register', 'AuthController@register');
+Route::get('users', 'AuthController@users');
 Route::post('user-login', 'AuthController@login');
 
 //lists all active tests
