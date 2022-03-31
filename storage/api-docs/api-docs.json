@@ -94,6 +94,22 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "sort[order]",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort[by]",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {

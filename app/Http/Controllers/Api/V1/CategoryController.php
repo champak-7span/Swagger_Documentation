@@ -53,7 +53,22 @@ class CategoryController extends Controller
      *           type="string"
      *      )
      *   ),
-     * 
+     * * *     @OA\Parameter(   
+     *      name="sort[order]",
+     *      in="query",
+     *      required=false,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *  *   @OA\Parameter(
+     *      name="sort[by]",
+     *      in="query",
+     *      required=false,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
      *   @OA\Response(
      *      response=200,
      *       description="Success",
@@ -76,6 +91,16 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'sort[order]' =>  ['in:asc,desc'],
+        
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+     
+      
         $categories = $this->categoryService->collection($request->all());
         return response()->json(['success' => $categories])->setStatusCode(Response::HTTP_OK);
     }

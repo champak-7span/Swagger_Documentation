@@ -5,8 +5,10 @@ namespace App\Services;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use App\Traits\FilterTrait;
-use App\Traits\PaginationTrait;
 use App\Library\AssetHelper;
+use App\Traits\PaginationTrait;
+use App\Exceptions\CustomException;
+use Illuminate\Support\Facades\Schema;
 
 class CategoryService
 {
@@ -21,21 +23,39 @@ class CategoryService
 
     public function collection($inputs = null)
     {
+       
         $inputs = $this->paginationAttribute($inputs);
-        $query =  $this->category->select('*');
-           
+        // $query =  $this->category->select('*');
+        $query = $this->category->getQB();
+
         if (isset($inputs['search'])) {
             $query->search($inputs['search']);
         }
-       
-
          $this->filterInput($query, $inputs);
 
-        // if (!isset($inputs['sort'])) {
-        //     $query->orderBy('id', 'desc');
-        // }
+       
+        if (!isset($inputs['sort'])) {
+            $query->orderBy('id', 'desc');
+        }
+
+       
         
-        // $this->sortInput($query, $inputs);
+        if (!empty($inputs['sort']) && !empty($inputs['sort']['by']) && !empty($inputs['sort']['order'])) {
+
+            if ($inputs['sort']['order'] != 'asc' && $inputs['sort']['order'] != 'desc' ) {
+                
+                throw new CustomException(__('message.sortByFormatNotvalid'), 500);
+            }
+            if (!Schema::hasColumn('categories', $inputs['sort']['by']))
+            {
+                throw new CustomException(__('message.columnNotfound'), 400);
+            }
+
+            $query = $query->orderBy($inputs['sort']['by'], $inputs['sort']['order']);
+        } else {
+            $query = $query->defaultSort('-id');
+        }
+
         $inputs['limit'] = $inputs['limit'] == -1 ? $query->count() : $inputs['limit'];
 
         $query = $query->paginate($inputs['limit'], ['*'], 'page', $inputs['page']);

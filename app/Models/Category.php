@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\BaseModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
-    use HasFactory;
+    use BaseModel,HasFactory;
 
     protected $fillable = [
         'name',
@@ -15,6 +16,8 @@ class Category extends Model
         'created_at', 
         'updated_at'
     ];
+    
+    protected $relationship = [];
 
     public function scopeSearch($query, $search)
     {
@@ -25,4 +28,9 @@ class Category extends Model
     {
         return $query->where('id' , $value);
     }
+
+    public $queryable = [
+        'id'
+    ];
+    
 }
