@@ -13,7 +13,7 @@ class Upsert extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,9 @@ class Upsert extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+            $rules =  [
+                'name' =>  ['required', 'max:64'],
+            ];
+            return $rules;
     }
 }
